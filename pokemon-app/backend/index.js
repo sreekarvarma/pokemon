@@ -1,17 +1,14 @@
-const path = require('path');
 const express = require('express');
-const cors = require('cors')
-const axios = require('axios')
+const cors = require('cors');
+const axios = require('axios');
 
 const app = express();
-app.use(express.json())
-app.use(cors())
-
-// Serve React static files
-app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.use(express.json());
+app.use(cors());
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
 
+// GET /pokemon?page=1
 app.get('/pokemon', async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 5;
@@ -35,6 +32,7 @@ app.get('/pokemon', async (req, res) => {
   }
 });
 
+// GET /pokemon/:name
 app.get('/pokemon/:name', async (req, res) => {
   const { name } = req.params;
   try {
@@ -54,12 +52,7 @@ app.get('/pokemon/:name', async (req, res) => {
   }
 });
 
-// Serve index.html for all other routes (React Router support)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
+  console.log(`✅ API Server running at http://localhost:${PORT}`);
 });
