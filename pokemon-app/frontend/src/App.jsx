@@ -7,13 +7,14 @@ function App() {
   const [page, setPage] = useState(1);
   const [pokemonList, setPokemonList] = useState([]);
   const [error, setError] = useState('');
+  const BASE_URL = 'https://pokemon-6ebn.onrender.com';
 
   const fetchPokemon = async (pageNum) => {
     try {
       setError('');
-      const listRes = await axios.get(`http://localhost:3000/pokemon?page=${pageNum}`);
+      const listRes = await axios.get(`${BASE_URL}/pokemon?page=${pageNum}`);
       const promises = listRes.data.results.map((p) =>
-        axios.get(`http://localhost:3000/pokemon/${p.name}`)
+        axios.get(`${BASE_URL}/pokemon/${p.name}`)
       );
       const details = await Promise.all(promises);
       setPokemonList(details.map((res) => res.data));
