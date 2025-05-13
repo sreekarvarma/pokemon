@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(cors())
 
 // Serve React static files
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
 
